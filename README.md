@@ -1,3 +1,4 @@
 # boggle
 Boggle Game 
-In thisgame, the player will try and find as many words as he can. The amount of points the player will recieve depends on the leangth of the word. 
+
+In this game, the player will try and find as many words as he/she can. The amount of points the player will receive depends on the length of the word. Players can play on different levels and try to beat previous rounds.
