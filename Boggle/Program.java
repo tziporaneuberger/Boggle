@@ -1,32 +1,60 @@
-package Boggle;
+
 import java.util.Scanner;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Timer;
-//mport java.io.File;
-//import java.net.MalformedURLException;
-//import java.net.URL;
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+
 public class Program {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
+		
+		System.out.println("Welcome to Boggle!");
+		System.out.println("Please choose from the following options:\n "+
+				           "1.New round\n2.Quit the game" );
+		
 
 		Scanner keyboard=new Scanner (System.in);
-		BoggleBoard boggle = new BoggleBoard() ;
-		boggle.getBoard();
-		ArrayList <String> words=new ArrayList <String>();
-		System.out.println(boggle);
+		
+		int choice = keyboard.nextInt();
+		
+		while (choice!=2)
+		{
+		    switch(choice)
+		    {
+		    case 1:// new round
+		    	BoggleBoard boggle = new BoggleBoard() ;
+				boggle.getBoard();
+				
+				System.out.println(boggle);
+				
+				ArrayList <String> words=new ArrayList <String>();
 
-		BoggleTimer timer=new BoggleTimer();
-		timer.start();
-		int minute=LocalDateTime.now().getMinute();
+				
+				int minute=LocalDateTime.now().getMinute();
+					
+					System.out.println("\nEnter any words you see. You have 1 minute");
+					while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
+						words.add(keyboard.nextLine());
+					}
+					System.out.println("\nTimes up.");
+					System.out.println("These are the words you entered: \n"+words);
+		    	break;
+		    	default:
+		    		    System.out.println("Invalid entry. Please try again.");
+		        break;
+		    }
+		    
 			
-			System.out.println("\nEnter the words you see");
-			while(keyboard.hasNext() && LocalDateTime.now().getMinute()-minute<3){
-				words.add(keyboard.next());
-			}
-			System.out.println("Done");
-			System.out.println("These are the words you entered: \n"+words);
+			System.out.println("\nEnter 1 to start a new round or 2 to quit to the game.");
+			choice = keyboard.nextInt();
+		}
+		
+		System.exit(0);
 
 			/*public static void runExample(){
 			// construct the URL to the Wordnet dictionary directory
