@@ -1,4 +1,3 @@
-package Boggle;
 import java.util.Random;
 public class BoggleBoard 
 {
@@ -31,3 +30,4 @@ public class BoggleBoard
 	
 	
 }}
+

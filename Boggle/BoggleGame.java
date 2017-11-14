@@ -1,10 +1,12 @@
-package Boggle;
-
 
 public class BoggleGame 
 {
 	public static void main (String [] args)
 	{
+		System.out.println("Welcome to Boggle!");
+		System.out.println("Please choose from the following options:\n "+
+				           "1.New round\n2.Quit the game" );
+		
 		BoggleBoard board = new BoggleBoard();
 		
 		char [][] theBoard = board.newBoard();
