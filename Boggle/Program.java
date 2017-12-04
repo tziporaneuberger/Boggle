@@ -27,22 +27,30 @@ public class Program {
 		    switch(choice)
 		    {
 		    case 1:// new round
-		    	BoggleBoard boggle = new BoggleBoard() ;
-				boggle.getBoard();
-				
-				System.out.println(boggle);
-				
-				ArrayList <String> words=new ArrayList <String>();
-
-				
-				int minute=LocalDateTime.now().getMinute();
-					
-					System.out.println("\nEnter any words you see. You have 1 minute");
-					while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
-						words.add(keyboard.nextLine());
-					}
-					System.out.println("\nTimes up.");
-					System.out.println("These are the words you entered: \n"+words);
+					    	BoggleBoard boggle = new BoggleBoard() ;
+							boggle.getBoard();
+							
+							System.out.println(boggle);
+							
+							
+							//Timer timer = new Timer();
+							//timer.schedule((new Timer(TimerResponse)), 60000 /* 60 secs */);
+							
+							
+							
+							ArrayList <String> words=new ArrayList <String>();
+			
+						
+						    int minute=LocalDateTime.now().getMinute();
+							
+							System.out.println("\nEnter any words you see. You have 1 minute");
+							
+							while(keyboard.hasNext() && LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
+								words.add(keyboard.nextLine());
+							}
+							
+							System.out.println("\nTimes up.");
+							System.out.println("These are the words you entered: \n"+words);
 		    	break;
 		    	default:
 		    		    System.out.println("Invalid entry. Please try again.");
