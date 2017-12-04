@@ -8,8 +8,7 @@ public class BoggleBoard {
 	int num;//the number of rows
 
 	public BoggleBoard(){   // missing q, need to fix the dice letter options , and a way to "mix up the dice"
-		this.boggle= new char [][]{{'q','q','q','q','q','q'},
-			//{'a', 'r', 't','l','e','d'}, 
+		this.boggle= new char [][]{{'a', 'r', 't','l','e','d'}, 
 			{'f','o','g','s','k','w'}
 		,
 			{'r','h','e', 'c', 't','m'}, {'n', 'u', 'a','b','i','y'},{'o', 'r', 'p','l','a','d'}, {'f','o','g','s','k','w'},
