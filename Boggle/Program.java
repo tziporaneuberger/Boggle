@@ -41,13 +41,26 @@ public class Program {
 							ArrayList <String> words=new ArrayList <String>();
 			
 						
-						    int minute=LocalDateTime.now().getMinute();
+
+					       /* try
+					        {
+					        	Test myTest = new Test ();
+					            words = myTest.getInput();
+					        }
+					        catch( Exception e )
+					        {
+					            System.out.println( e );
+					        }*/
 							
 							System.out.println("\nEnter any words you see. You have 1 minute");
 							
-							while(keyboard.hasNext() && LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
+							int minute=LocalDateTime.now().getMinute();
+							
+							while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
 								words.add(keyboard.nextLine());
 							}
+							
+							words.remove(words.size()-1);    // remove last word, because past the timer 
 							
 							System.out.println("\nTimes up.");
 							System.out.println("These are the words you entered: \n"+words);

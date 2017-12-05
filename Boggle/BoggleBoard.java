@@ -9,13 +9,13 @@ public class BoggleBoard {
 	int num;//the number of rows
 
 	public BoggleBoard(){   // missing q, need to fix the dice letter options , and a way to "mix up the dice"
-		this.boggle= new char [][]{{'a', 'r', 't','l','e','d'}, 
-			{'f','o','g','s','k','w'},
-			{'r','h','e', 'c', 't','m'}, {'n', 'u', 'a','b','i','y'},{'o', 'r', 'p','l','a','d'}, {'f','o','g','s','k','w'},
-			{'b','h','a', 'h', 't','n'}, {'n', 'e', 'w','b','d','y'},{'a', 'j', 't','c','i','d'}, {'f','o','g','s','k','w'},
-			{'f','h','e', 'g', 'v','m'}, {'n', 'o', 'd','m','i','x'},{'a', 'r', 's','l','e','k'}, {'f','o','g','s','k','w'},
-			{'a','h','e', 'c', 'z','d'}, {'c', 'u', 'y','b','i','j'}};
-			num=4;
+		this.boggle= new char [][]{
+			{'A', 'A', 'E','E','E','E'},{'A','A','A','F','R','S'},{'A','A','F', 'I', 'R','S'}, {'A', 'D', 'E','N','N','N'},{'A', 'E', 'E','E','E','M'},
+			{'A','E','E','G','M','U'},{'A','E','G', 'M', 'N','N'}, {'A', 'F', 'I','R','S','Y'},{'B', 'J', 'K','Q','X','Z'}, {'C','C','N','S','T','W'},
+			{'C','E','I', 'I', 'L','T'}, {'C', 'E', 'I','L','P','T'},{'C', 'E', 'I','P','S','T'}, {'D','D','L','N','O','R'},{'D','H','H', 'L', 'O','R'},
+			{'E', 'I', 'I','I','T','T'} , {'D','H','H','N','O','T'},{'D', 'H', 'L','N','O','R'},{'E', 'M', 'O','T','T','T'},{'E', 'N', 'S','S','S','U'},
+			{'F', 'I', 'P','R','S','Y'},{'G', 'O', 'R','R','W','V'},{'H', 'I', 'P','R','R','Y'},{'N', 'O', 'O','T','U','W'},{'O', 'O', 'O','T','T','U'}};
+			num=5;
 		this.board=new char[num][num];
 	}
 	
