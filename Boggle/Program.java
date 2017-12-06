@@ -53,17 +53,22 @@ public class Program {
 					        }*/
 							
 							System.out.println("\nEnter any words you see. You have 1 minute");
+							keyboard.nextLine();
 							
 							int minute=LocalDateTime.now().getMinute();
 							
 							while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
+								
 								words.add(keyboard.nextLine());
 							}
 							
 							words.remove(words.size()-1);    // remove last word, because past the timer 
 							
-							System.out.println("\nTimes up.");
-							System.out.println("These are the words you entered: \n"+words);
+							System.out.println("\nTime's up.");
+							
+							
+							// checks if the words are on the board
+							boggle.checkList(words);
 		    	break;
 		    	default:
 		    		    System.out.println("Invalid entry. Please try again.");
