@@ -9,7 +9,7 @@ public class BoggleTimer {
 	TimerTask task = new TimerTask() {
 		public void run() {
 			timePassedInSeconds++;
-			System.out.println( timePassedInSeconds + " seconds passed");
+			//System.out.println( timePassedInSeconds + " seconds passed");
 
 		}
 
@@ -18,11 +18,16 @@ public class BoggleTimer {
 	public void start() {
 		timePassed.scheduleAtFixedRate(task, 1000,1000);
 
-	}
-	public static void main(String[] args) {
+	}}
+	
+	 class TestBoggleTimer
+	{
+	//public static void main(String[] args)
+	public void main (String [] args){
 		BoggleTimer bt = new BoggleTimer();
 		bt.start();
 		
 		
 	}
 }
+//}	

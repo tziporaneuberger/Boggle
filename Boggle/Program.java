@@ -1,4 +1,5 @@
 
+
 import java.util.Scanner;
 import java.time.*;
 import java.util.ArrayList;
@@ -12,37 +13,38 @@ public class Program {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-		
+
+
 		System.out.println("Welcome to Boggle!");
 		System.out.println("Please choose from the following options:\n "+
-				           "1.New round\n2.Quit the game" );
-		
+				"1.New round\n 2.Quit the game" );
+
 
 		Scanner keyboard=new Scanner (System.in);
-		
+
 		int choice = keyboard.nextInt();
-		
+
 		while (choice!=2)
 		{
-		    switch(choice)
-		    {
-		    case 1:// new round
-					    	BoggleBoard boggle = new BoggleBoard() ;
-							boggle.getBoard();
-							
-							System.out.println(boggle);
-							
-							
-							//Timer timer = new Timer();
-							//timer.schedule((new Timer(TimerResponse)), 60000 /* 60 secs */);
-							
-							
-							
-							ArrayList <String> words=new ArrayList <String>();
-			
-						
+			switch(choice)
+			{
+			case 1:// new round
+				BoggleBoard boggle = new BoggleBoard() ;
+				boggle.makeBoard();
 
-					       /* try
+				System.out.println(boggle);
+
+
+				//Timer timer = new Timer();
+				//timer.schedule((new Timer(TimerResponse)), 60000 /* 60 secs */);
+
+
+
+				ArrayList <String> words=new ArrayList <String>();
+
+
+
+				/* try
 					        {
 					        	Test myTest = new Test ();
 					            words = myTest.getInput();
@@ -51,38 +53,40 @@ public class Program {
 					        {
 					            System.out.println( e );
 					        }*/
-							
-							System.out.println("\nEnter any words you see. You have 1 minute");
-							keyboard.nextLine();
-							
-							int minute=LocalDateTime.now().getMinute();
-							
-							while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
-								
-								words.add(keyboard.nextLine());
-							}
-							
-							words.remove(words.size()-1);    // remove last word, because past the timer 
-							
-							System.out.println("\nTime's up.");
-							
-							
-							// checks if the words are on the board
-							boggle.checkList(words);
-		    	break;
-		    	default:
-		    		    System.out.println("Invalid entry. Please try again.");
-		        break;
-		    }
-		    
-			
+
+				System.out.println("\nEnter any words you see. You have 1 minute");
+				keyboard.nextLine();
+
+				int minute=LocalDateTime.now().getMinute();
+
+				while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
+
+					words.add(keyboard.nextLine().toUpperCase());
+				} 
+
+				System.out.println("\nTime's up.");
+				
+				// checks if the words are on the board
+				FindWords find = new FindWords(boggle, words);
+				find.fillInTruthArray();
+				boolean[] trueFalse=find.getTruth();
+				for (int i=0;i<words.size(); i++){
+					System.out.printf("%s %6s%n", words.get(i), trueFalse[i] );
+				}
+				break;
+			default:
+				System.out.println("Invalid entry. Please try again.");
+				break;
+			}
+
+
 			System.out.println("\nEnter 1 to start a new round or 2 to quit to the game.");
 			choice = keyboard.nextInt();
 		}
-		
+
 		System.exit(0);
 
-			/*public static void runExample(){
+		/*public static void runExample(){
 			// construct the URL to the Wordnet dictionary directory
 			String wnhome = System.getenv("WNHOME");
 			String path = wnhome + File.separator + "dict";
@@ -104,6 +108,6 @@ public class Program {
 			System.out.println("Gloss = " + word.getSynset().getGloss());
 
 		}*/
-		}
-
 	}
+
+}

@@ -1,4 +1,5 @@
 
+
 import java.util.ArrayList;
 import java.util.Random;
 
@@ -24,7 +25,7 @@ public class BoggleBoard {
 	// chooses a random dice for each position - using an array list to represent all the positions
 	// once the index of a dice is chosen it is removed from the array list - so it leaves an ever shrinking array list.
 	// when it falls out the loop, all the dice are used.
-	public void getBoard(){
+	public void makeBoard(){
 		  ArrayList<Integer> availIndexes=new ArrayList<Integer>(num*num);
 		  for (int i=0; i<(num*num); i++){
 		   availIndexes.add(i);
@@ -41,7 +42,9 @@ public class BoggleBoard {
 		   }
 		  }
 		 }
-	
+	public char[][] getBoard(){
+		return board;
+	}
 	
 	
 	
