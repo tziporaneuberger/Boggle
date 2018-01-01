@@ -35,12 +35,16 @@ public class Program {
 			case 1:// new round
 				 
 				roundNum++;
-				BoggleBoard boggle = new BoggleBoard();
+				
+			    BoggleBoard boggle;
+			    
+			    boggle = new BoggleBoard();
+			    
 				boggle.makeBoard();
 				points=0;
 				pointsPerRound=0;
 
-				System.out.println("You have 20 seconds to enter words\n");
+				System.out.println("You have 2 minutes to enter words\n");
 
 				System.out.println(boggle);
 
@@ -52,12 +56,12 @@ public class Program {
 
 				ThreadKiller tk = new ThreadKiller(t);
 				Timer timer = new Timer();
-				timer.schedule(tk, 20 * 1000);
+				timer.schedule(tk, 120 * 1000);
 
 				t.start();
 
 				try {
-					Thread.sleep(20 * 1001);
+					Thread.sleep(120 * 1001);
 
 					// t.join();
 				} catch (InterruptedException e) {
@@ -65,10 +69,6 @@ public class Program {
 				}
 
 				timer.cancel();
-
-				
-
-				// if (keyboard.hasNext()){keyboard.nextLine();}
 
 				System.out.println("\nTime's up.");
 				
@@ -79,7 +79,7 @@ public class Program {
 				words.addAll(hs);
                 
 				
-				
+			try {
 				// checks if the words are on the board
 				FindWords find = new FindWords(boggle, words);
 				find.fillInTruthArray();
@@ -96,7 +96,7 @@ public class Program {
 						System.out.println("is not on the board");
 						}
 					}
-					//on board- check if its in dictionary
+					//it is on board- now check if it's in dictionary
 					else{
 						boolean vr = dr.search(words.get(i));
 						if (vr==false){
@@ -109,6 +109,10 @@ public class Program {
 						}
 					}
 				}
+			}
+			catch (StackOverflowError e){
+				System.out.println("StackOverFlowError. \nThe game will continue with the next round");
+			}
 
 				break;
 			default:
