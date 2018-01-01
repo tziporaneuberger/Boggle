@@ -1,113 +1,148 @@
 
-
 import java.util.Scanner;
 import java.time.*;
 import java.util.ArrayList;
 import java.util.Timer;
+import java.util.TimerTask;
+import java.io.BufferedReader;
 import java.io.File;
-import java.net.MalformedURLException;
-import java.net.URL;
-
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 
 public class Program {
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
-
-
+        
+		// instantiate dictionary reader that reads in the dictionary file
+		DictionaryReader dr = new DictionaryReader();
+		
+		int points=0;
+		int pointsPerRound=0;
+		int totalPoints=0;
 		System.out.println("Welcome to Boggle!");
-		System.out.println("Please choose from the following options:\n "+
-				"1.New round\n 2.Quit the game" );
+		System.out.println("Please choose from the following options:\n " + "1.New round\n 2.Quit the game");
 
-
-		Scanner keyboard=new Scanner (System.in);
+		Scanner keyboard = new Scanner(System.in);
 
 		int choice = keyboard.nextInt();
-
-		while (choice!=2)
-		{
-			switch(choice)
-			{
+		while (choice != 2) {
+			switch (choice) {
 			case 1:// new round
-				BoggleBoard boggle = new BoggleBoard() ;
+				BoggleBoard boggle = new BoggleBoard();
 				boggle.makeBoard();
+				points=0;
+				pointsPerRound=0;
+
+				System.out.println("You have 10 seconds to enter words\n");
 
 				System.out.println(boggle);
 
+				
 
-				//Timer timer = new Timer();
-				//timer.schedule((new Timer(TimerResponse)), 60000 /* 60 secs */);
+				ArrayList<String> words = new ArrayList<String>();
 
+				Thread t = new InputReader(words);
 
+				ThreadKiller tk = new ThreadKiller(t);
+				Timer timer = new Timer();
+				timer.schedule(tk, 120 * 1000);
 
-				ArrayList <String> words=new ArrayList <String>();
+				t.start();
 
+				try {
+					Thread.sleep(120 * 1001);
 
+					// t.join();
+				} catch (InterruptedException e) {
+					System.out.println(e.getMessage());
+				}
 
-				/* try
-					        {
-					        	Test myTest = new Test ();
-					            words = myTest.getInput();
-					        }
-					        catch( Exception e )
-					        {
-					            System.out.println( e );
-					        }*/
+				timer.cancel();
 
-				System.out.println("\nEnter any words you see. You have 1 minute");
-				keyboard.nextLine();
+				
 
-				int minute=LocalDateTime.now().getMinute();
-
-				while(LocalDateTime.now().getMinute()-minute< 1){  // start with 1 min. for testing purposes
-
-					words.add(keyboard.nextLine().toUpperCase());
-				} 
+				// if (keyboard.hasNext()){keyboard.nextLine();}
 
 				System.out.println("\nTime's up.");
 				
+				
+
 				// checks if the words are on the board
 				FindWords find = new FindWords(boggle, words);
 				find.fillInTruthArray();
-				boolean[] trueFalse=find.getTruth();
-				for (int i=0;i<words.size(); i++){
-					System.out.printf("%s %6s%n", words.get(i), trueFalse[i] );
+				boolean[] trueFalse = find.getTruth();
+
+				for (int i = 0; i < words.size(); i++) {
+					System.out.printf("%-10s ", words.get(i));
+					// if not on the board
+					if (trueFalse[i] == false) {
+						if (words.get(i)== null){
+							
+						}
+						else{
+						System.out.println("is not on the board");
+						}
+					}
+					//on board- check if its in dictionary
+					else{
+						boolean vr = dr.search(words.get(i));
+						if (vr==false){
+						System.out.println("is not in dictionary");
+						}
+						else{
+							points = calculateScore(words.get(i));
+							System.out.println(points);
+							pointsPerRound+=points;
+						}
+					}
 				}
+
 				break;
 			default:
 				System.out.println("Invalid entry. Please try again.");
 				break;
 			}
 
-
-			System.out.println("\nEnter 1 to start a new round or 2 to quit to the game.");
+			// user may be still entering words when timer is up, so need to clear the
+			// buffer
+			// so that it will carry out the next choice
+			
+			if(choice==1)
+				
+			{System.out.println("\nTotal points for this round: "+ pointsPerRound);
+			totalPoints+= pointsPerRound;
+			System.out.println("Total points for this game: "+ totalPoints);
+			}
+			
+			
+			//choice = 2;
+			
+			System.out.println("\nEnter 1 to start a new round or 2 to quit the game.");
 			choice = keyboard.nextInt();
+			//System.out.println(choice);
+			// if (keyboard.hasNext()){keyboard.next();}choice =
+			// Integer.parseInt(keyboard.nextLine())}
+		}
+	}
+	
+	
+
+	public static int calculateScore(String word){
+		switch(word.length()){
+		case 1:
+			   return 0;
+		case 2:
+			return 0;
+		case 3:
+			return 1;
+		case 4:
+			return 2;
+		default:
+			return 3;
 		}
 
-		System.exit(0);
-
-		/*public static void runExample(){
-			// construct the URL to the Wordnet dictionary directory
-			String wnhome = System.getenv("WNHOME");
-			String path = wnhome + File.separator + "dict";
-			URL url = null;
-			try{ url = new URL("file", null, path); } 
-			catch(MalformedURLException e){ e.printStackTrace(); }
-			if(url == null) return;
-
-			// construct the dictionary object and open it
-			IDictionary dict = new Dictionary(url);
-			dict.open();
-
-			// look up first sense of the word "dog"
-			IIndexWord idxWord = dict.getIndexWord("dog", POS.NOUN);
-			IWordID wordID = idxWord.getWordIDs().get(0);
-			IWord word = dict.getWord(wordID);
-			System.out.println("Id = " + wordID);
-			System.out.println("Lemma = " + word.getLemma());
-			System.out.println("Gloss = " + word.getSynset().getGloss());
-
-		}*/
 	}
-
 }
