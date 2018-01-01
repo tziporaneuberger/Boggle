@@ -1,5 +1,4 @@
 
-
 import java.util.ArrayList;
 public class FindWords {
 
@@ -8,7 +7,7 @@ public class FindWords {
 	static boolean [] wordFound;
 	private static int [][] rowColIncrement;
 
-	public FindWords(BoggleBoard b, ArrayList<String> words){
+	public FindWords(IBoggleBoard b, ArrayList<String> words){
 		board=b.getBoard();
 		this.words=words;
 		rowColIncrement=new int[8][2];
@@ -38,6 +37,11 @@ public class FindWords {
 		int firstLetterRow = firstLetterPoint.getRow();
 		int firstLetterColumn = firstLetterPoint.getCol();
 		boolean found;
+		if (word.contains("QU")){
+			int index = word.indexOf('Q');
+			String wordBegin = word.substring(0, index+1);
+			word= wordBegin + word.substring(index+2);
+		}
 
 			if ( firstLetterRow != -1){
 				found = makeNextDecision(0,firstLetterRow,firstLetterColumn, word);
@@ -52,8 +56,14 @@ public class FindWords {
 	}
 
 	public Point findFirstLetter(char c, int beginRow, int beginCol){
+		int col;
+		if (beginRow !=0 || beginCol != 0){
+			col= beginCol+1;
+		}
+		else{
+			col= beginCol;
+		}
 		int row=beginRow;
-		int col= beginCol+1;
 		while(col<5){
 			if (board[row][col] == c){
 				return new Point(row, col);

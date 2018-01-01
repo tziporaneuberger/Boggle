@@ -1,15 +1,16 @@
 
 import java.util.Scanner;
-import java.time.*;
+import java.util.Set;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Timer;
-import java.util.TimerTask;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import javax.swing.JOptionPane;
+//import java.util.TimerTask;
+//import java.io.BufferedReader;
+//import java.io.File;
+//import java.io.FileNotFoundException;
+//import java.io.FileReader;
+//import java.io.IOException;
+
 
 public class Program {
 
@@ -19,6 +20,7 @@ public class Program {
 		// instantiate dictionary reader that reads in the dictionary file
 		DictionaryReader dr = new DictionaryReader();
 		
+		int roundNum = 0;
 		int points=0;
 		int pointsPerRound=0;
 		int totalPoints=0;
@@ -31,12 +33,14 @@ public class Program {
 		while (choice != 2) {
 			switch (choice) {
 			case 1:// new round
+				 
+				roundNum++;
 				BoggleBoard boggle = new BoggleBoard();
 				boggle.makeBoard();
 				points=0;
 				pointsPerRound=0;
 
-				System.out.println("You have 10 seconds to enter words\n");
+				System.out.println("You have 20 seconds to enter words\n");
 
 				System.out.println(boggle);
 
@@ -48,12 +52,12 @@ public class Program {
 
 				ThreadKiller tk = new ThreadKiller(t);
 				Timer timer = new Timer();
-				timer.schedule(tk, 120 * 1000);
+				timer.schedule(tk, 20 * 1000);
 
 				t.start();
 
 				try {
-					Thread.sleep(120 * 1001);
+					Thread.sleep(20 * 1001);
 
 					// t.join();
 				} catch (InterruptedException e) {
@@ -68,8 +72,14 @@ public class Program {
 
 				System.out.println("\nTime's up.");
 				
+				//make sure there are no duplicates 
+				Set<String> hs = new HashSet<>();
+				hs.addAll(words);
+				words.clear();
+				words.addAll(hs);
+                
 				
-
+				
 				// checks if the words are on the board
 				FindWords find = new FindWords(boggle, words);
 				find.fillInTruthArray();
@@ -112,7 +122,7 @@ public class Program {
 			
 			if(choice==1)
 				
-			{System.out.println("\nTotal points for this round: "+ pointsPerRound);
+			{System.out.println("\nTotal points for round #" + roundNum + ": "+ pointsPerRound);
 			totalPoints+= pointsPerRound;
 			System.out.println("Total points for this game: "+ totalPoints);
 			}

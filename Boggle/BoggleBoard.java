@@ -3,7 +3,8 @@
 import java.util.ArrayList;
 import java.util.Random;
 
-public class BoggleBoard {
+public class BoggleBoard implements IBoggleBoard
+{
 
 	private char[][]boggle;
 	private char[][] board;
