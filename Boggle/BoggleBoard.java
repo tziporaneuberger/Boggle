@@ -49,7 +49,7 @@ public class BoggleBoard implements IBoggleBoard
 	
 	
 	
-		public  void checkList(ArrayList<String> words) {
+		/*public  void checkList(ArrayList<String> words) {
 				
 			         //goes through array list of words
 				for (String w : words) { 
@@ -111,7 +111,7 @@ public class BoggleBoard implements IBoggleBoard
 		}
 
 
-
+*/
 
 
 
