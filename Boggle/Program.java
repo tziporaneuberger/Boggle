@@ -4,19 +4,13 @@ import java.util.Set;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Timer;
-//import java.util.TimerTask;
-//import java.io.BufferedReader;
-//import java.io.File;
-//import java.io.FileNotFoundException;
-//import java.io.FileReader;
-//import java.io.IOException;
+
 
 
 public class Program {
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-        
+		
 		// instantiate dictionary reader that reads in the dictionary file
 		DictionaryReader dr = new DictionaryReader();
 		
@@ -48,7 +42,7 @@ public class Program {
 
 				System.out.println(boggle);
 
-				
+			
 
 				ArrayList<String> words = new ArrayList<String>();
 
@@ -56,7 +50,7 @@ public class Program {
 
 				ThreadKiller tk = new ThreadKiller(t);
 				Timer timer = new Timer();
-				timer.schedule(tk, 120 * 1000);
+				timer.schedule(tk,120 * 1000);
 
 				t.start();
 
@@ -86,11 +80,17 @@ public class Program {
 				boolean[] trueFalse = find.getTruth();
 
 				for (int i = 0; i < words.size(); i++) {
+					if (words.get(i).isEmpty()) // don't count or print out a space
+					{
+					}
+					else
+					{
 					System.out.printf("%-10s ", words.get(i));
+					}
 					// if not on the board
 					if (trueFalse[i] == false) {
-						if (words.get(i)== null){
-							
+						if (words.get(i).length()<3){
+							System.out.println("0 points. Too short.");
 						}
 						else{
 						System.out.println("is not on the board");
@@ -111,7 +111,7 @@ public class Program {
 				}
 			}
 			catch (StackOverflowError e){
-				System.out.println("StackOverFlowError. \nThe game will continue with the next round");
+				System.out.println("\nStackOverFlowError. \nThe game will continue with the next round");
 			}
 
 				break;
@@ -132,7 +132,6 @@ public class Program {
 			}
 			
 			
-			//choice = 2;
 			
 			System.out.println("\nEnter 1 to start a new round or 2 to quit the game.");
 			choice = keyboard.nextInt();
@@ -146,10 +145,6 @@ public class Program {
 
 	public static int calculateScore(String word){
 		switch(word.length()){
-		case 1:
-			   return 0;
-		case 2:
-			return 0;
 		case 3:
 			return 1;
 		case 4:

@@ -3,8 +3,8 @@ import java.util.ArrayList;
 public class FindWords {
 
 	private static char[][] board;
-	ArrayList<String> words;
-	static boolean [] wordFound;
+	private ArrayList<String> words;
+	private static boolean [] wordFound;
 	private static int [][] rowColIncrement;
 
 	public FindWords(IBoggleBoard b, ArrayList<String> words){
@@ -21,10 +21,15 @@ public class FindWords {
 		rowColIncrement[7][0] = -1;          rowColIncrement[7][1] = 0;	
 		wordFound = new boolean [words.size()];
 	}
+	
+	//This method fills up an array of true/false values for each word on the list, for whether or not it is on the board
 	public void fillInTruthArray(){
 		for(int i=0; i<words.size(); i++){
 			if (words.get(i).isEmpty()){
 				wordFound[i]=false;
+			}
+			else if (words.get(i). length() < 3){
+				wordFound[i]= false;
 			}
 			else{
 			wordFound[i]= findAWord(words.get(i), 0, 0);
@@ -37,23 +42,32 @@ public class FindWords {
 		int firstLetterRow = firstLetterPoint.getRow();
 		int firstLetterColumn = firstLetterPoint.getCol();
 		boolean found;
+		
 		if (word.contains("QU")){
 			int index = word.indexOf('Q');
 			String wordBegin = word.substring(0, index+1);
 			word= wordBegin + word.substring(index+2);
 		}
-
-			if ( firstLetterRow != -1){
+             
+		    //first letter was found on board, so check for more letters
+			if ( firstLetterRow != -1)
+			{    
 				found = makeNextDecision(0,firstLetterRow,firstLetterColumn, word);
-				if (found == false){
+				
+				//found first letter, but other letters not near it, so look for word again,starting from the location after where you found the letter the previous time.
+				if (found == false){     
 					found=findAWord(word, firstLetterRow, firstLetterColumn);
 				}
 				return found;
 			}
+			
+			// first letter was not found on board
 			else{
 				return false;
 			}
 	}
+	
+	
 
 	public Point findFirstLetter(char c, int beginRow, int beginCol){
 		int col;
@@ -82,33 +96,36 @@ public class FindWords {
 		return new Point(-1, -1);
 	}
 
-	public boolean findNextLetter(){
-		return true;
-	}
-
-
-	public static boolean makeNextDecision(int lastCharAt, int fromRow, int fromCol, String s)
+	
+	
+    
+	public boolean makeNextDecision(int lastCharAt, int fromRow, int fromCol, String s)
 	{  
 		int thisCharAt = lastCharAt + 1;
 		int numberOfChoices =8;
 		int choiceNumber =0;
 		boolean atGoal = false;
 
-		while (atGoal == false && choiceNumber < numberOfChoices){
+		while (atGoal == false && choiceNumber < numberOfChoices)
+		{
 			int row = nextChoiceRow(choiceNumber,fromRow);
 			int col = nextChoiceColumn(choiceNumber,fromCol);
 			if (thisDecisionChoiceIsValid (row,col) && board[row][col]== s.charAt(thisCharAt))
 			{ 
-					if (goalHasBeenReached(thisCharAt, s)){
+					if (goalHasBeenReached(thisCharAt, s))
+					{
 						return true;
 					}
+					
 					atGoal = makeNextDecision(thisCharAt,row,col, s);
-				}
+			}
 
 			choiceNumber = choiceNumber +1;
 		}
 			return atGoal;
 	}
+	
+	
 
 	public static int nextChoiceColumn(int choiceNumber, int fromCol)
 	{
@@ -140,13 +157,7 @@ public class FindWords {
 			return false;
 	}
 	
-	public String getTruthString(){
-		StringBuilder info = new StringBuilder();
-		for (boolean b: wordFound){
-			info.append(b+"\n");
-		}
-		return info.toString();
-	}
+	
 	
 	public boolean[] getTruth(){
 		return wordFound;
